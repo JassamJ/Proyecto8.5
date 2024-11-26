@@ -1,5 +1,6 @@
 
 interface IUser {
+    _id: string;
     name: string;
     email: string;
     lastNames: string;

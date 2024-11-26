@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserModel } from "../models/UsersModel";
+import jwt from "jsonwebtoken";
 
 export const registerUsers = async (req:Request, res:Response):
 Promise<any> => {
@@ -14,7 +15,7 @@ Promise<any> => {
         if(req.user?.rol === "administrador" && rol === "cliente"){
             return res.status(400).json({msg:"Los administradores no pueden crear clienes"})
         }
-        if(name || email || lastNames || rol || password){
+        if(!name || !email || !lastNames || !rol || !password){
             return res.status(400).json({
                 msg:"faltan datos para crear un ususario"
             })
@@ -27,16 +28,27 @@ Promise<any> => {
             })
         }
 //name="jesus"
-        await UserModel.create ({
+        const user = await UserModel.create ({
             name,
             lastNames,
             email,
             password,
             rol
         })
-        return res.status(200).json({msg:"Usuario creado con exito!"})
+        const token = jwt.sign(JSON.stringify(user),"pocoyo");
+
+        res.status(200).json({msg:"Usuario creado con exito!", token})
+        return
     } catch (error) {
         console.log(error);
         return res.status(500).json({msg: "Hubo un error al crear el usuario"})
     }
+}
+
+export const singin = async (req:Request, res:Response): Promise<any>=>{
+    //correo y contrasena
+    //verificar que el usuario existe
+    const user = await UserModel.findOne({email:req.body.email, password:req.body.password});
+    //si no existe devuelva un error
+    //si existe devuelva token
 }

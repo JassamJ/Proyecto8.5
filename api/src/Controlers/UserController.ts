@@ -57,8 +57,9 @@ export const singin = async (req: Request, res: Response): Promise<any> => {
         }
         const token = jwt.sign(JSON.stringify(user), "pocoyo");
         res.status(200).json({
-            msg: 'Sesion iniciada con exito', token
+            msg: 'Sesion iniciada con exito', token, user
         })
+        return;
     } catch (error) {
         console.log(error);
         res.status(500).json({

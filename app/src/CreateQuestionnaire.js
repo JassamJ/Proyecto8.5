@@ -1,8 +1,17 @@
 import React, { useState } from 'react'
 import { Card, Container, Form, Row, Col, Button, InputGroup, CloseButton, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { AnwerQuestionnaire } from './components/AnwerQuestionnaire';
+import axios from 'axios';
 
 export const CreateQuestionnaire = () => {
+    const onSubmit = async () => {
+        try {
+            const data = { ...createQuestionnaire, rol: 'client' };
+            await axios.post('http://localhost:4000/questions/create', data);
+        } catch (error) {
+            alert("Hubo un error");
+        }
+    };
 
     const [showQuestionnaire, setShowQuestionnaire] = useState(false);
 

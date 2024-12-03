@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
+import { Schema,model } from "mongoose";
 import { Iquestion } from "../GlobalTypes";
 
-const QuestionSchema = new Schema<Iquestion>({
+ export const QuestionSchema = new Schema<Iquestion>({
     title:{
         type:String,
         required: true,
@@ -25,3 +25,4 @@ const QuestionSchema = new Schema<Iquestion>({
         required: true,
     },
 })
+export const QuestionsModels  = model ("question", QuestionSchema);

@@ -20,4 +20,4 @@ const AnswerSchema = new Schema<IAnswer>({
 
 })
 
-export const AnswersModel = model ("answer", AnswerSchema);
+export const QuestionnaireModel = model ("answer", AnswerSchema);

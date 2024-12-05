@@ -25,4 +25,4 @@ import { Iquestion } from "../GlobalTypes";
         required: true,
     },
 })
-export const QuestionsModels  = model ("question", QuestionSchema);
+export const QuestionsModel  = model ("questions", QuestionSchema);

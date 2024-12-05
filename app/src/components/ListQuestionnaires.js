@@ -1,14 +1,24 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Card, Col, Container, Dropdown, Form, Row } from 'react-bootstrap';
 
 export const ListQuestionnaires = ({ rol }) => {
 
-    const [questionnaires, setQuestionnaires] = useState([])
+    const [questionnaires, setQuestionnaires] = useState([]);
 
     useEffect(() => {
-        const url = rol == "administrator" ? "/api/get-all-questionnaires" : "/api/get-questionnaires-by-user";
-        //axios.get(url) -> Devuelve un objeto "data";
+        getData
     }, [])
+
+    const getData = async () =>{
+        try{
+            const {data} = await axios.get("http://localhost:4000/questionnaire/create")
+            setQuestionnaires(data.questionnaires);
+        }catch (error){
+            console.log(error)
+            alert("hubo un error al obtener los cuestionarios")
+        }
+    }
 
     return (
         <Container>
@@ -18,7 +28,7 @@ export const ListQuestionnaires = ({ rol }) => {
                         <Col>
                             <Card style={{ width: "15rem" }} className='mb-3'>
                                 <Card.Body>
-                                    <a href={`/create-questionnaires/${i}`}
+                                    <a href={/create-questionnaires/${i}}
                                         style={{ textDecoration: "none", color: "black" }}>
                                         <Card.Img src="https://cdn-icons-png.flaticon.com/512/3913/3913648.png" />
                                     </a>
@@ -55,5 +65,5 @@ export const ListQuestionnaires = ({ rol }) => {
                 }
             </Row>
         </Container>
-    )
+    )
 }

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Container, Row, Col } from 'react-bootstrap'
 import { FileEarmarkBarGraphFill, PeopleFill } from 'react-bootstrap-icons';
-
+import axios from 'axios';
 export const Dashboard = () => {
 
     const [user, setUser] = useState({});
-
+    const [metrics, setMetrics] = useState({
+        numerOfUsers: 0,
+        numberOfQuestionnaires: 0
+    })
     useEffect(() => {
         getUser()
+        getMetrics()
     }, []);
 
     const getUser = () => {
@@ -15,6 +19,18 @@ export const Dashboard = () => {
         setUser(user);
     }
 
+    const getMetrics = async ()=>{
+        try{
+            const res = await axios.get("http://localhost:4000/questionnaire/get-metrics");
+            const data = {
+                numberOfQuestionnaires:res.data.numberOfQuestionnaires,
+                numerOfUsers:res.data.numerOfUsers
+            }
+            getMetrics(data)
+        }catch(error){
+            alert("hubo un error al obtener las metricas")
+        }
+    }
 
 
     return (
@@ -27,7 +43,7 @@ export const Dashboard = () => {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>Numero de usuarios registrados: </Card.Title>
-                                    <PeopleFill /> 85
+                                    <PeopleFill /> {getMetrics.numerOfUsers}
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -35,7 +51,7 @@ export const Dashboard = () => {
                             <Card>
                                 <Card.Body>
                                     <Card.Title>Numero de cuestionarios creados: </Card.Title>
-                                    <FileEarmarkBarGraphFill /> 252
+                                    <FileEarmarkBarGraphFill /> {getMetrics.numberOfQuestionnaires}
                                 </Card.Body>
                             </Card>
                         </Col>

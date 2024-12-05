@@ -3,9 +3,9 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-
 const App = () => {
   const [data, setData] = useState({});
+
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -15,14 +15,18 @@ const App = () => {
     setData(loginData)
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async() => {
     //Peticion a la DB
     try{
-      const res = await axios.post("http://localhost:4000/user/controller", data);
+      const res = await axios.post("http://localhost:4000/users/sing-in", data)
       const user = res.data.user;
       user.logined = true;
       localStorage.user = JSON.stringify(user)
-      navigate("/list-q")
+      if(user.rol == "administrator"){
+        navigate("/home")
+      }else{
+        navigate("/list-q")
+      }
   }catch (error){
       alert("Hubo un error")
   }

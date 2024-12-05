@@ -14,4 +14,4 @@ const OpcionsSchema = new Schema<IOpcion>({
     },
 });
 
-export const Opcines = model ("question", OpcionsSchema);
+export const OpcionsModel  = model ("option", OpcionsSchema);
